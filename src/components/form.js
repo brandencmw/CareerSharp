@@ -32,7 +32,7 @@ var __runInitializers = (this && this.__runInitializers) || function (thisArg, i
     }
     return useValue ? value : void 0;
 };
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 let SearchForm = (() => {
     let _classDecorators = [customElement('search-form')];
@@ -41,26 +41,58 @@ let SearchForm = (() => {
     let _classThis;
     let _classSuper = LitElement;
     let _instanceExtraInitializers = [];
-    let _title_decorators;
-    let _title_initializers = [];
+    let _searchTerm_decorators;
+    let _searchTerm_initializers = [];
     var SearchForm = class extends _classSuper {
         static { _classThis = this; }
         static {
             const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
-            _title_decorators = [property()];
-            __esDecorate(this, null, _title_decorators, { kind: "accessor", name: "title", static: false, private: false, access: { has: obj => "title" in obj, get: obj => obj.title, set: (obj, value) => { obj.title = value; } }, metadata: _metadata }, _title_initializers, _instanceExtraInitializers);
+            _searchTerm_decorators = [property()];
+            __esDecorate(this, null, _searchTerm_decorators, { kind: "accessor", name: "searchTerm", static: false, private: false, access: { has: obj => "searchTerm" in obj, get: obj => obj.searchTerm, set: (obj, value) => { obj.searchTerm = value; } }, metadata: _metadata }, _searchTerm_initializers, _instanceExtraInitializers);
             __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
             SearchForm = _classThis = _classDescriptor.value;
             if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
-            __runInitializers(_classThis, _classExtraInitializers);
         }
-        #title_accessor_storage = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _title_initializers, "Hello World"));
-        get title() { return this.#title_accessor_storage; }
-        set title(value) { this.#title_accessor_storage = value; }
+        #searchTerm_accessor_storage = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _searchTerm_initializers, ''));
+        get searchTerm() { return this.#searchTerm_accessor_storage; }
+        set searchTerm(value) { this.#searchTerm_accessor_storage = value; }
+        static styles = css `
+    :host {
+      display: block;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+  `;
+        handleSearch(event) {
+            const input = event.target;
+            this.searchTerm = input.value;
+            // Do something with the search term, like trigger a search
+        }
         render() {
             return html `
-        <p>${this.title}</p>
-        `;
+      <form @submit=${this._handleSearch}>
+        <input type="text" .value=${this.searchTerm} @input=${this.handleSearch} placeholder="Search...">
+        <button type="submit">Search</button>
+      </form>
+    `;
+        }
+        _handleSearch(event) {
+            event.preventDefault();
+            console.log("This is called");
+        }
+        static {
+            __runInitializers(_classThis, _classExtraInitializers);
         }
     };
     return SearchForm = _classThis;
