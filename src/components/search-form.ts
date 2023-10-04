@@ -26,23 +26,22 @@ export class SearchForm extends LitElement {
     }
   `;
 
-  handleSearch(event: Event) {
-    const input = (event.target as HTMLInputElement);
-    this.searchTerm = input.value;
-    // Do something with the search term, like trigger a search
-  }
-
-  render() {
+  protected render() {
     return html`
-      <form @submit=${this._handleSearch}>
-        <input type="text" .value=${this.searchTerm} @input=${this.handleSearch} placeholder="Search...">
+      <form @submit=${this._handleSubmit}>
+        <input id='keywordSearchField' type="text" .value=${this.searchTerm} placeholder="Search...">
         <button type="submit">Search</button>
       </form>
     `;
   }
 
-  private _handleSearch(event: Event) {
+  private _handleSubmit(event: Event) {
     event.preventDefault()
-    console.log("This is called")
+    const searchField = this.shadowRoot!.getElementById("keywordSearchField") as HTMLInputElement;
+    const searchQuery = searchField.value.trim();
+    if (searchQuery != "") {
+      console.log(searchQuery)
+      this.dispatchEvent(new CustomEvent<string>("search", {detail: searchQuery}));
+    }
   } 
 }
