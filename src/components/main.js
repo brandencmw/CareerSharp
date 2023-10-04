@@ -33,7 +33,7 @@ var __runInitializers = (this && this.__runInitializers) || function (thisArg, i
     return useValue ? value : void 0;
 };
 import { LitElement, html } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import "./search-form.js";
 let App = (() => {
     let _classDecorators = [customElement('search-page')];
@@ -41,15 +41,23 @@ let App = (() => {
     let _classExtraInitializers = [];
     let _classThis;
     let _classSuper = LitElement;
+    let _instanceExtraInitializers = [];
+    let _searchResults_decorators;
+    let _searchResults_initializers = [];
     var App = class extends _classSuper {
         static { _classThis = this; }
         static {
             const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+            _searchResults_decorators = [property()];
+            __esDecorate(this, null, _searchResults_decorators, { kind: "accessor", name: "searchResults", static: false, private: false, access: { has: obj => "searchResults" in obj, get: obj => obj.searchResults, set: (obj, value) => { obj.searchResults = value; } }, metadata: _metadata }, _searchResults_initializers, _instanceExtraInitializers);
             __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
             App = _classThis = _classDescriptor.value;
             if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
             __runInitializers(_classThis, _classExtraInitializers);
         }
+        #searchResults_accessor_storage = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _searchResults_initializers, []));
+        get searchResults() { return this.#searchResults_accessor_storage; }
+        set searchResults(value) { this.#searchResults_accessor_storage = value; }
         render() {
             return html `
         <search-form @search=${this._handleSearch}></search-form>
@@ -57,6 +65,11 @@ let App = (() => {
         }
         async _handleSearch(event) {
             console.log(event.detail);
+            const search_endpoint = "https://localhost:7237/api/JobListings";
+            const response = await fetch(search_endpoint, { method: "GET" });
+            console.log(response);
+            const json_response = await response.json();
+            console.log(json_response);
         }
     };
     return App = _classThis;
